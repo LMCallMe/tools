@@ -8,7 +8,7 @@
 INSTALL_PATH=${PPATH}/vim-header
 GIT_URL=https://github.com/alpertuna/vim-header
 
-if [ ! -d INSTALL_PATH]; then
+if [ ! -d INSTALL_PATH ]; then
     # Install vim-header
     git clone --depth=1 ${GIT_URL} ${INSTALL_PATH}
     

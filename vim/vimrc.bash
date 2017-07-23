@@ -26,3 +26,4 @@ export PPATH=~/.vim_runtime/sources_non_forked
 export MY_CONFIG=~/.vim_runtime/my_configs.vim
 
 source vim-header.bash
+source vim-mkdir.bash
