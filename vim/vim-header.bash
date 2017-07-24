@@ -1,5 +1,5 @@
 #!/bin/bash
-# File: vim-header.bash
+# File: vim/vim-header.bash
 # Author: lmcallme <l.m.zhongguo@gmial.com>
 # Date: 23.07.2017
 # Last Modified Date: 23.07.2017
@@ -16,7 +16,7 @@ if [ ! -d INSTALL_PATH ]; then
     echo "let g:header_field_author = '${NAME}'" >> ${MY_CONFIG}
     echo "let g:header_field_author_email = '${EMAIL}'" >> ${MY_CONFIG}
     # disable auto add header
-    ehco "let g:header_auto_add_header = 0" >> ${MY_CONFIG}
+    echo "let g:header_auto_add_header = 0" >> ${MY_CONFIG}
     # echo "map <F4> :AddHeader" >> ${MY_CONFIG}
 
     echo "installed vim-header"
