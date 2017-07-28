@@ -5,6 +5,8 @@
 # Last Modified Date: 23.07.2017
 # Last Modified By: lmcallme <l.m.zhongguo@gmial.com>
 
+source vim-env.bash
+
 INSTALL_PATH=${PPATH}/vim-mkdir
 GIT_URL=https://github.com/pbrisbin/vim-mkdir.git
 

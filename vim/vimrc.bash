@@ -5,10 +5,7 @@
 # Last Modified Date: 23.07.2017
 # Last Modified By: lmcallme <l.m.zhongguo@gmial.com>
 
-cd $(dirname "$0") || exit 1
-
-export NAME=lmcallme
-export EMAIL=l.m.zhongguo@gmial.com
+source vim-env.bash
 
 if [[ ! -d ~/.vim_runtime ]]; then
     
@@ -19,11 +16,11 @@ if [[ ! -d ~/.vim_runtime ]]; then
     #sh ~/vim_runtime/install_basic_vimrc.sh
 fi
 
-# amix-vim's pathogen path
-export PPATH=~/.vim_runtime/sources_non_forked
+vimrc_p=$(pwd )
 
-# amix-vim's append vimrc_file
-export MY_CONFIG=~/.vim_runtime/my_configs.vim
+cd $(dirname "$0") || exit 1
 
 source vim-header.bash
 source vim-mkdir.bash
+
+cd ${vimrc_p}
