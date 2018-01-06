@@ -10,7 +10,7 @@ source vim-env.bash
 if [[ ! -d ~/.vim_runtime ]]; then
     
     # Install amix-vimrc
-
+    sudo apt-get install ack-grep # install ack command for ack.vim
     git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
     sh ~/.vim_runtime/install_awesome_vimrc.sh
     #sh ~/vim_runtime/install_basic_vimrc.sh
