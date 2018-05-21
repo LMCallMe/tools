@@ -32,7 +32,10 @@ cd - > /dev/null
 #恢复 PWD
 cd "$_SAVED_PWD"
 
-sudo cp $DIR/etc/shadowsocks.json /etc/shadowsocks.json
+if [ ! -e /etc/shadowshock.json ]; then
+    sudo cp $DIR/etc/shadowsocks.json /etc/shadowsocks.json
+fi
+
 sudo cp $DIR/service/ssserver.service /lib/systemd/system/ssserver.service
 sudo systemctl enable ssserver
 sudo systemctl start ssserver
