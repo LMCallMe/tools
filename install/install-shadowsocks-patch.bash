@@ -10,4 +10,4 @@
 
 CHANGED_FILE=${HOME}/.local/lib/python2.7/site-packages/shadowsocks/crypto/openssl.py
 
-sed -i sed -i "s/EVP_CIPHER_CTX_cleanup/EVP_CIPHER_CTX_reset/g" ${CHANGED_FILE}
+sed -i "s/EVP_CIPHER_CTX_cleanup/EVP_CIPHER_CTX_reset/g" ${CHANGED_FILE}
