@@ -32,14 +32,30 @@ cd - > /dev/null
 #恢复 PWD
 cd "$_SAVED_PWD"
 
-if [ ! -e /etc/shadowshock.json ]; then
-    sudo cp $DIR/etc/shadowsocks.json /etc/shadowsocks.json
+_CONFIG_=/etc/shadowshock.json
+if [ ! -e $_CONFIG_ ]; then
+    sudo cp $DIR/etc/shadowsocks.json $_CONFIG_
 fi
 
-SSSERVER=/lib/systemd/system/ssserver.service
-sudo cp $DIR/service/ssserver.service $SSSERVER 
+_SSSERVER_=$DIR/service/ssserver.service
 
-sudo echo "User=${USER}" >> sudo SSSERVER
+echo "[Unit]" > $_SSSERVER_
+echo "Description=Shadowsocka Server" >> $_SSSERVER_
+echo "After=network.target" >> $_SSSERVER_
+
+echo "[Service]" >> $_SSSERVER_
+echo "Type=forking" >> $_SSSERVER_
+BIN_SSSERVER=${HOME}/.local/bin/ssserver
+echo "ExecStart=${BIN_SSSERVER} -c ${_CONFIG_} -d start" >> $_SSSERVER_
+echo "ExecStop=${BIN_SSSERVER} -c ${_CONFIG_} -d stop" >> $_SSSERVER_
+echo "ExecReload=${BIN_SSSERVER} -c ${_CONFIG_} -d restart" >> $_SSSERVER_
+echo "Restart=on-abort" >> $_SSSERVER_
+echo "User=${USER}" >> $_SSSERVER_
+
+echo "[Install]" >> $_SSSERVER_
+echo "WantedBy=multi-user.target" >> $_SSSERVER_
+
+sudo cp $_SSSERVER_ /lib/systemd/system/ssserver.service
 
 sudo systemctl enable ssserver
 sudo systemctl start ssserver
