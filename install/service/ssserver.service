@@ -2,6 +2,9 @@
 Description=Shadowsocka Server
 After=network.target
 
+[Install]
+WantedBy=multi-user.target
+
 [Service]
 Type=forking
 ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
@@ -9,6 +12,4 @@ ExecStop=/usr/local/bin/ssserver -c /etc/shadowsocks.json -d stop
 ExecReload=/usr/local/bin/ssserver -c /etc/shadowsocks.json -d restart
 Restart=on-abort
 
-[Install]
-WantedBy=multi-user.target
 
