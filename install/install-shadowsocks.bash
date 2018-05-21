@@ -50,7 +50,6 @@ echo "ExecStart=${BIN_SSSERVER} -c ${_CONFIG_} -d start" >> $_SSSERVER_
 echo "ExecStop=${BIN_SSSERVER} -c ${_CONFIG_} -d stop" >> $_SSSERVER_
 echo "ExecReload=${BIN_SSSERVER} -c ${_CONFIG_} -d restart" >> $_SSSERVER_
 echo "Restart=on-abort" >> $_SSSERVER_
-echo "User=${USER}" >> $_SSSERVER_
 
 echo "[Install]" >> $_SSSERVER_
 echo "WantedBy=multi-user.target" >> $_SSSERVER_
