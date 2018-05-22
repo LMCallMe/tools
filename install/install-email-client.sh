@@ -6,7 +6,7 @@
 # Last Modified By  : lmcallme <l.m.zhongguo@gmial.com>
 
 ACCOUNT="qqmail"
-SMTP_HOST="stmp.qq.com"
+SMTP_HOST="smtp.qq.com"
 SMTP_PORT="465"
 IMAP_HOST="imap.qq.com"
 IMAP_PORT="993"
@@ -19,7 +19,7 @@ FROM="123@qq.com"
 if [ ! -e ~/.muttrc ]; then
     sudo apt install mutt msmtp offlineimap
 fi
-sudo cat >~/.muttrc<<EOF
+cat >~/.muttrc<<EOF
 set mbox_type=Maildir
 set sendmail="/usr/bin/msmtp"
 
@@ -100,7 +100,7 @@ account default : ${ACCOUNT}
 EOF
 
 # 配置offlineimaprc
-sudo cat >~/.offlineimaprc<<EOF
+cat >~/.offlineimaprc<<EOF
 [general]
 accounts = ${ACCOUNT}
 # change to whatever you want
