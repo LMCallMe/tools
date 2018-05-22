@@ -5,6 +5,8 @@
 # Last Modified Date: 21.05.2018
 # Last Modified By  : lmcallme <l.m.zhongguo@gmial.com>
 
+# htpasswd : sudo apt install apache2-utils
+
 htpasswd -c -i -b auth.htpasswd USERNAME PASSWORD \
 && touch newfile \
 && cat <<EOF > Dockerfile
