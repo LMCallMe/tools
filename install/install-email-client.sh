@@ -172,9 +172,19 @@ realdelete = no
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 EOF
 
+if [ ! -d ~/.mutt ]; then
+    mkdir ~/.mutt
+fi
+
+if [ ! -d ~/.mail/${ACCOUNT} ]; then
+    mkdir -p ~/.mail/${ACCOUNT}
+fi
+
 if [ ! -e ~/.config/systemd/user/offlineimap.service ]; then
+    mkdir -p ~/.config/systemd/user
     cp ${DIR}/service/offlineimap.service ~/.config/systemd/user/offlineimap.service
     cp ${DIR}/service/offlineimap.timer ~/.config/systemd/user/offlineimap.timer
 fi
 
 systemctl --user enable offlineimap.timer
+systemctl --user start offlineimap
