@@ -55,7 +55,7 @@ set mbox_type=Maildir
 set sendmail="/usr/bin/msmtp"
 
 set folder=~/.mail
-source ~/.mutt/mailboxes
+source ~/.mail/mailboxes
 set spoolfile="+${ACCOUNT}/INBOX"
 #set record = "+${ACCOUNT}/Sent\ Message"
 set postponed = "+${ACCOUNT}/Drafts"
@@ -134,7 +134,7 @@ ui = ttyui
 
 [mbnames]
 enabled = yes
-filename = ~/.mutt/mailboxes
+filename = ~/.mail/mailboxes
 header = "mailboxes "
 peritem = "+%(accountname)s/%(foldername)s"
 sep = " "
@@ -171,10 +171,6 @@ maxconnection = 1
 realdelete = no
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 EOF
-
-if [ ! -d ~/.mutt ]; then
-    mkdir ~/.mutt
-fi
 
 if [ ! -d ~/.mail/${ACCOUNT} ]; then
     mkdir -p ~/.mail/${ACCOUNT}
