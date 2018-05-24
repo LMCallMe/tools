@@ -5,6 +5,8 @@
 # Last Modified Date: 22.05.2018
 # Last Modified By  : lmcallme <l.m.zhongguo@gmial.com>
 
+# configuare
+
 ACCOUNT="qqmail"
 SMTP_HOST="smtp.qq.com"
 SMTP_PORT="465"
@@ -15,6 +17,35 @@ PASSWORD="mypassword"
 REAL_NAME="just_a_qqmail"
 FROM="123@qq.com"
 
+# get current dir
+#保存PWD
+_SAVED_PWD=$PWD
+#获得该文件的位置
+echo "$0" | grep -q "$0"
+if [ $? -eq 0 ]; then
+        cd "$(dirname "$BASH_SOURCE")"
+        CUR_FILE=$(pwd)/$(basename "$BASH_SOURCE")
+        CUR_DIR=$(dirname "$CUR_FILE")
+        cd - > /dev/null
+else
+        if [ ${0:0:1} = "/" ]; then
+                CUR_FILE=$0
+        else
+                CUR_FILE=$(pwd)/$0
+        fi
+        CUR_DIR=$(dirname "$CUR_FILE")
+fi
+#去掉路径中的相对路径，如a/..b/c
+cd "$CUR_DIR"
+DIR=$PWD
+cd - > /dev/null
+#恢复 PWD
+cd "$_SAVED_PWD"
+
+if [ -e ${DIR}/env.sh ]; then
+	source ${DIR}/env.sh
+fi
+
 # 配置mutt
 if [ ! -e ~/.muttrc ]; then
     sudo apt install mutt msmtp offlineimap
@@ -24,20 +55,15 @@ set mbox_type=Maildir
 set sendmail="/usr/bin/msmtp"
 
 set folder=~/.mail
-set spoolfile="+INBOX"
-set mbox = "+[${ACCOUNT}]/All Mail"
-set postponed = "+[${ACCOUNT}]/Drafts"
+source ~/.mutt/mailboxes
+set spoolfile="+${ACCOUNT}/INBOX"
+#set record = "+${ACCOUNT}/Sent\ Message"
+set postponed = "+${ACCOUNT}/Drafts"
 unset record
 
-mailboxes +INBOX
-
 macro index D \
-    "<save-message>+[${ACCOUNT}]/Trash<enter>" \
+    "<save-message>+${ACCOUNT}/Trash<enter>" \
     "move message to the trash"
-
-macro index S \
-    "<save-message>+[${ACCOUNT}]/Spam<enter>" \
-    "mark message as spam"
 
 set realname="${REAL_NAME}"
 set from="${FROM}"
@@ -106,6 +132,14 @@ accounts = ${ACCOUNT}
 # change to whatever you want
 ui = ttyui
 
+[mbnames]
+enabled = yes
+filename = ~/.mutt/mailboxes
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " "
+footer = "\n"
+
 [Account ${ACCOUNT}]
 localrepository = mylocal
 # Profile-Name for the local Mails for a given Account
@@ -137,3 +171,10 @@ maxconnection = 1
 realdelete = no
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 EOF
+
+if [ ! -e ~/.config/systemd/user/offlineimap.service ]; then
+    cp ${DIR}/service/offlineimap.service ~/.config/systemd/user/offlineimap.service
+    cp ${DIR}/service/offlineimap.timer ~/.config/systemd/user/offlineimap.timer
+fi
+
+systemctl --user enable offlineimap.timer
