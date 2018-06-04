@@ -55,7 +55,7 @@ set mbox_type=Maildir
 set sendmail="/usr/bin/msmtp"
 
 set folder=~/.mail
-source ~/.mutt/mailboxes
+source ~/.mail/mailboxes
 set spoolfile="+${ACCOUNT}/INBOX"
 #set record = "+${ACCOUNT}/Sent\ Message"
 set postponed = "+${ACCOUNT}/Drafts"
@@ -134,7 +134,7 @@ ui = ttyui
 
 [mbnames]
 enabled = yes
-filename = ~/.mutt/mailboxes
+filename = ~/.mail/mailboxes
 header = "mailboxes "
 peritem = "+%(accountname)s/%(foldername)s"
 sep = " "
@@ -172,9 +172,15 @@ realdelete = no
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 EOF
 
+if [ ! -d ~/.mail/${ACCOUNT} ]; then
+    mkdir -p ~/.mail/${ACCOUNT}
+fi
+
 if [ ! -e ~/.config/systemd/user/offlineimap.service ]; then
+    mkdir -p ~/.config/systemd/user
     cp ${DIR}/service/offlineimap.service ~/.config/systemd/user/offlineimap.service
     cp ${DIR}/service/offlineimap.timer ~/.config/systemd/user/offlineimap.timer
 fi
 
 systemctl --user enable offlineimap.timer
+systemctl --user start offlineimap
